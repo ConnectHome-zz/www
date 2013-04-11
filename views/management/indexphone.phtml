@@ -1,0 +1,73 @@
+<script>
+    window.onload = function() {
+        document.body.id="managementCss";
+        date_heure('date_heure');
+    };
+</script>
+
+                <div class="span6 offset3">
+
+                    <div class="well">
+
+                        <div class="pagination-centered">
+                            <h2>Log In</h2>
+                        
+                        <!-- log in form -->
+                        <form action="/management/signinPhone" method="post" onsubmit="return validateForm()">
+                            <fieldset class="">
+                                
+                                <legend><small>Enter your name & password</small></legend>
+
+                                    <!-- name field -->
+                                    <br><label>Name</label>
+                                    <div id="ErrorName">
+                                        <div class="input-prepend">
+                                            <span class="add-on"><i class="icon-user"></i></span>
+                                            <input class="input-medium" type="text" placeholder="Your name"  id="Name" name = "name" >
+                                        </div>
+                                    </div>
+
+                                
+
+
+                                <!-- password field -->      
+                                <div class="">
+                                    <label>Password</label>
+                                    <div id="ErrorPswd1">
+                                        <div class="input-prepend">
+                                            <span class="add-on"><i class="icon-lock"></i></span>
+                                            <input class="input-medium" type="password" placeholder="Your password" id="Pswd1" name="pass">
+                                        </div>
+                                    </div><br>
+                                </div>
+
+                                <span class="help-block" id="error"></span>
+
+                                <!-- log in button --> 
+                                <div class="pagination-centered">
+                                    <button type="submit" class="btn btn-primary btn-large btn-block">Log In &raquo;</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                        </div>
+                    </div>
+
+<!--                     down button 
+                    <div class="btn-group">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                            Action
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="#">Action</a></li>
+                            <li><a tabindex="-1" href="#">Another action</a></li>
+                            <li><a tabindex="-1" href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a tabindex="-1" href="#">Separated link</a></li>
+                        </ul>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

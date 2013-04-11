@@ -1,0 +1,22 @@
+
+<script type="text/javascript">
+
+    $('#add-regular').ready(function(){
+
+        $.gritter.add({
+            // (string | mandatory) he heading of the notification
+            title: 'Movement ',
+            // (string | mandatory) the text inside the notification
+            text: 'The move <?php echo $move;?> was launch by <?php echo $name;?>',
+            // (string | optional) the image to display on the left
+            image: '../images/mini_logo.gif',
+            // (bool | optional) if you want it to fade out on its own or just sit there
+            sticky: false,
+            // (int | optional) the time you want it to be alive for before fading out
+            time: '2000'
+        });
+        return false;
+    });
+
+</script>
+

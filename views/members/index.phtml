@@ -1,0 +1,221 @@
+<script>
+    window.onload = function() {
+        document.body.id = "membersCss";
+        date_heure('date_heure');
+    };
+</script>
+
+<div class="span12">
+    <div class="well pagination-centered">
+        <legend><h3>Members management</h3></legend>
+        You can see the users and manage their data.
+    </div>
+
+
+    <div class="row-fluid">
+        <div class="span6 well pagination-centered">
+
+            <!-- add a member button -> display form --> 
+            <div class="pagination-centered">
+                <p><a class="btn btn-primary btn-large" onclick="FormMember()">Add a member &raquo;</a></p>
+            </div><br>
+            <!-- display of table all users -->
+            <table class="pagination-centered table table-hover table-bordered"  id="tableUser">
+                <?php
+                echo "<tr class=" . "info" . ">";
+                echo "<td><h4>NAME</h4></td>";
+                echo "<td><h4>TYPE</h4></td>";
+                echo "<td><h4>ADMIN</h4></td>";
+                if (isset($_SESSION['admin']))
+                    if ($_SESSION['admin'] == 1) {
+                        echo "<td><h4>DELETE</h4></td>";
+                        echo "<td><h4>EDIT</h4></td>";
+                    }
+                echo "</tr>";
+
+                foreach ($members as $member) {
+
+                    echo '<tr >';
+                    echo '<th >' . $member->getName() . '</th>';
+                    #       echo '<th>' . $membre->getId() . '</th>';
+                    echo '<th>' . $member->getAdult() . '</th>';
+                    echo '<th>' . $member->getIsadmin() . '</th>';
+                    if (isset($_SESSION['id'])) {
+                        if ($member->getId() != $_SESSION['id']) {
+                            if (isset($_SESSION['admin']))
+                                if ($_SESSION['admin'] == 1)
+                                    echo '<th><a href="/members/delete?id=' . $member->getId() . '" class="btn btn-danger" ">Delete &raquo;</a></th>';
+                        }else if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1)
+                            echo '<th></th>';
+                    }
+
+
+                    if (isset($_SESSION['admin'])) {
+                        if ($_SESSION['admin'] == 1) {
+                            $name = "'" . $member->getName() . "'";
+                            $pass = "'" . $member->getPassword() . "'";
+                            $ad = "'" . $member->getAdult() . "'";
+                            $admin = "'" . $member->getIsadmin() . "'";
+                            echo '<th><button class="btn btn-primary" onclick="EditmemberAjax(' . $name . ',' . $member->getId() . ',' . $pass . ',' . $ad . ',' . $admin . ')">Edit &raquo;</button></th>';
+                        }
+                    }
+
+                    echo '</tr>';
+                }
+                ?>
+            </table>
+
+        </div>
+
+        <!-- ----------------------------------------------------------------------------------------- -->
+        <!-- registration Form  -->
+        <div class="span6 well" id="form_members" style="display:none">
+            <form  >
+                <fieldset>
+                    <div class="pagination-centered"><legend><h4>New member</h4></legend></div>
+                    <!-- name field  -->
+                    <div class="span12">
+                        <div class="span5 offset1">
+                            <label><strong>Name </strong></label>
+                            <div id="ErrorName">
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="icon-user"></i></span>
+                                    <input type="text" placeholder="Member name" id="Name" name = "Nom" class="input-medium" >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- password field  -->
+                        <div class="span5">
+                            <label><strong>Password</strong></label>
+                            <div id="ErrorPswd1">
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="icon-lock"></i></span>
+                                    <input type="password" placeholder="Member password" id="Pswd1" name="Pass" class="input-medium">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div><br><br><br><br>
+
+
+                    <div class="span12">
+
+                        <!-- checkbox adult  -->
+                        <div class="span5 offset1">
+                            <br>
+                            <span class="help-block" id="error"></span>
+                            <label class="checkbox">
+                                <input type="checkbox"  id="checkboxAdult"><strong>Adult</strong>
+                            </label>
+
+                        </div>
+
+                        <!-- repeated password field  -->
+                        <div class="span5">
+                            <label><strong>Repeat password</strong></label>
+                            <div id="ErrorPswd2">
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="icon-lock"></i></span>
+                                    <input type="password" placeholder="Member password" id="Pswd2" name="Pass2" class="input-medium">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </fieldset>
+
+                <!-- add button  -->                                   
+                <br><br><div class="pagination-centered"><a onclick="refreshMembers()" class="btn btn-primary btn-large">Add &raquo;</a></div>
+            </form>
+        </div>
+        <!-- ----------------------------------------------------------------------------------------- -->
+
+        <!-- if administrator -> Edit Form -->
+        <div id="form_edit" class="span6 well" style="display:none">
+
+            <div class="">
+                <legend><div class="pagination-centered"><h4 id="h4"></h4></div></legend>
+                <input id="inpHide" type="hidden"> 
+                <form   method="post"  >
+                    <fieldset>
+
+                        <div class="span12">
+                            <div class="span5 offset1">
+                                <!-- name field -->
+                                <br><label><strong>Name</strong></label>
+                                <div id="ErrorNameUser">
+                                    <div class="input-prepend">
+                                        <span class="add-on"><i class="icon-user"></i></span>
+                                        <input class ="input input-medium" type="text" placeholder="" id="Name1" name = "Name" >
+                                    </div>
+                                </div>
+
+                                <!-- password field -->
+                                <br><label><strong>New Password</strong></label>
+                                <div id="ErrorPswd3">
+                                    <div class="input-prepend">
+                                        <span class="add-on"><i class="icon-lock"></i></span>
+                                        <input class ="input input-medium" type="text"  id="Pswd3" name = "Pswd1" >
+                                    </div>
+                                </div>
+
+
+
+                                <!-- repeated password field -->
+                                <br><label><strong>Repeat password</strong></label>
+                                <div id="ErrorPswd4">
+                                    <div class="input-prepend">
+                                        <span class="add-on"><i class="icon-lock"></i></span>
+                                        <input class ="input input-medium" type="text"  id="Pswd4" name = "Pswd2" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="span4 offset2">
+
+
+                                <!-- age field -->
+                                <br><label><strong>Age</strong></label>
+                                <div class="controls">  
+                                    <label class="checkbox">
+                                        <input type="checkbox"  id="checkboxAdult2"> Adult
+                                    </label>
+                                </div>
+
+
+
+                                <!-- admin field -->
+                                <br><?php
+                                if (isset($_SESSION['admin']))
+                                    if ($_SESSION['admin'] == 1) {
+                                        echo '<label><strong>Admin</strong></label>';
+                                        echo '<div class="controls">';
+                                        echo '<label class="checkbox">';
+                                        echo '<input type="checkbox" id="checkboxAdmin"> Admin';
+                                        echo '</label>';
+                                        echo '</div>';
+                                    }
+                                ?>
+
+
+
+                                <!-- Edit button -->
+                                <br><br><a  class="btn btn-success btn-large" onclick="EditMembers()">Edit</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+        <div id="info"></div>
+    </div>
+
+</div>
+</div>
+</div>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<doc>
+<exp>0</exp>
+<dest>0</dest>
+<msgtype>1</msgtype>
+<msg>
+	<ID>2</ID>
+	<nameP>Microphone</nameP>
+	<descP>Voice controller</descP>
+	<mov>
+		<movID>1</movID>
+		<nameM>MovementMic1</nameM>
+		<descM>Action1</descM>
+	</mov>
+	<mov>
+		<movID>2</movID>
+		<nameM>MovementMic2</nameM>
+		<descM>Action2</descM>
+	</mov>
+	<mov>
+		<movID>3</movID>
+		<nameM>MovementMic3</nameM>
+		<descM>Action3</descM>
+	</mov>
+	<mov>
+		<movID>4</movID>
+		<nameM>MovementMic4</nameM>
+		<descM>Action4</descM>
+	</mov>
+</msg>
+</doc>

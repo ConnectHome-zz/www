@@ -1,0 +1,11 @@
+﻿<!-- add action -->
+<label class="control-label" for="select01">Choose an associated action</label>
+<div class="controls">
+    <?php
+    echo '<select id="select2" name="form' . $_GET['i'] . 'Action">';
+    foreach ($actions as $action) {
+        echo '<option id="' . $action->getId() . '">' . $action->getName() . '</option>';
+    }
+    ?>
+</select>
+</div>  

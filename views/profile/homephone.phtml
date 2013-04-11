@@ -1,0 +1,171 @@
+<script>
+    window.onload = function() {
+        document.body.id = "managementCss";
+        date_heure('date_heure');
+    };
+</script>
+
+<div class="span10 offset1">
+
+    <div class="well pagination-centered">
+        <legend><h3>Management page</h3></legend>
+        Here you can edit your information, create or delete your scenarios and movements...
+    </div>
+
+    <div class="span5" style="margin:0">
+        <div class="well pagination-centered">
+            <legend><h4>All your information</h4></legend>
+            <div id="info">
+                <table class="table table-bordered table-striped">
+                    <tr class="info">
+                        <td><strong><div class="pagination-centered">Name</div></strong></td>
+                        <td><strong><div class="pagination-centered">Age</div></strong></td>
+                    </tr>
+                    <tr>
+                        <td><div class="pagination-centered"><?php echo $member->getName(); ?></div></td>
+                        <td><div class="pagination-centered"><?php echo $member->getAdult(); ?></div></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div class ="well pagination-centered">
+            <!-- display of related list scenario -->
+            <?php
+            echo ' <legend ><h4>List of scenarios related to ' . $member->getName() . '</h4></legend>';
+
+            $i = 0;
+            foreach ($member->getScenarios() as $scen) {
+                $i++;
+
+                echo '<a  class="btn" onclick="actionscenario(' . $i . ')"> ' . $scen->getName() . '</a>';
+                echo'<div id="bouton_' . $i . '"style="display:none">';
+                echo '<a class="btn btn-danger" href="/profile/deleteScenario?id=' . $scen->getId() . '">Delete scenario</a>';
+                echo '<table class="table table-hover">   ';
+
+
+                //display titles of lines
+                echo '<tr class="info"><small>';
+                echo "<td><strong><small>Scenario</small></strong></td>";
+                echo "<td><strong><small>Scenario's description</small></strong></td>";
+                echo "<td><strong><small>Movement</small></strong></td>";
+                echo '</small></tr>';
+
+                //display of scenario name (nomScenario), desciprtion of scenario (descriptionScenario), scenario movement (mouvementScenario)
+                echo '<tr><td><small> ' . $scen->getName() . '</small></td>';
+                echo '<td><small> ' . $scen->getDesc() . '</small></td>';
+                echo '<td><small> ' . $scen->getMovement()->getName() . '</small></td>';
+
+                echo '<tr class="info">';
+                echo "<td><strong><small>Associated actions</small></strong></td>";
+                echo "<td><strong><small>Action's desription</small></strong></td>";
+                echo "<td><strong><small>Actuator</small></strong></td>";
+                echo '</tr>';
+
+//                    //display of scenario name (nomScenario), desciprtion of scenario (descriptionScenario), scenario movement (mouvementScenario)
+//                    echo '<tr><td> ' . $scen->getName() . '</td>';
+//                    echo '<td> ' . $scen->getDesc() . '</td>';
+//                    echo '<td> ' . $scen->getMovement()->getName() . '</td>';
+                //loop about actions: name, description, actuators
+                $j = 0;
+                foreach ($scen->getActions() as $action) {
+                    if ($j == 2) {
+//                            echo '<tr><td></td>';
+//                            echo '<td></td>';
+//                            echo '<td></td>';
+                    }
+                    echo '<tr>';
+                    echo '<td><small>' . $action->getName() . '</small></td>';
+                    echo '<td><small>' . $action->getDesc() . '</small></td>';
+                    echo '<td><small>' . $action->getActuator() . '</small></td>';
+                    echo '</tr>';
+                    $j = 2;
+                }
+                echo '</tr>';
+                echo '</table>';
+                echo '</div>';
+                echo'<br>';
+            }
+            ?>
+
+        </div>
+
+        <!--             log out button 
+                    <p><a class="btn btn-primary" href="/management/logout">Log Out &raquo;</a></p>-->
+    </div>
+
+    <!-- list of movements -->
+    <div class="span5">
+        <div class="movements well">
+            <legend class="pagination-centered"><h4>List of movements</h4></legend>
+            <?php
+            echo '<table class="table table-hover table-bordered">';
+
+            echo'
+                <tr class="info">
+                <td><strong><small><div class="pagination-centered">Movement</div></small></strong></td>
+                <td><strong><small><div class="pagination-centered">Scenario</div></small></strong></td>
+                </tr>';
+
+            foreach ($member->getMovements() as $mov) {
+                $j = 0;
+                echo '<tr>';
+                echo '<td><small>';
+                echo $mov->getDesc();
+                echo '</small></td>';
+                echo '<td><small>';
+                foreach ($member->getScenarios() as $scen) {
+                    $mov2 = $scen->getMovement(); {
+                        if ($mov2->getDesc() == $mov->getDesc()) {
+                            echo $scen->getName();
+                            $j++;
+                        }
+                    }
+                }
+                if ($j == 0)
+                    echo 'No scenario';
+            }
+            echo '</small></td>';
+            echo '</tr>';
+            echo '</table>';
+            ?>
+        </div>
+    </div> 
+</div>  
+
+<!-- log out button -->
+<div class="span10 offset1">
+        <a class="span5 btn btn-large btn-block btn-danger" style="margin:0" type="button" href="/management/logout"><br>Log Out &raquo;<br><br></a>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("body").on('click', "#submit_form_btn", function(e) {
+            if (validateFormEdit()) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: "post",
+                    url: $("#form_edit").attr('action'),
+                    data: $("#form_edit").serialize(),
+                    success: function(result) {
+                        $("#info").html(result);
+                    },
+                    error: function() {
+                        alert('Une erreur est survenue !')
+                    }
+                });
+            }
+        });
+    });
+
+    $("body").on('submit', "#form_edit", function() {
+
+        var ret = true;
+        ret = validateFormEdit();
+        return ret;
+    });
+</script>
+
+</div></div>

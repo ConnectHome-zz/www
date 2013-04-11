@@ -1,0 +1,212 @@
+<!DOCTYPE HTML >
+
+<html>
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+
+        <script type="text/javascript" src="/script/assets/js/widgets.js"></script>
+        <script type="text/javascript" src="/script/assets/js/jquery.js"></script>
+        <script type="text/javascript" src="/script/assets/js/google-code-prettify/prettify.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-transition.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-alert.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-modal.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-dropdown.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-scrollspy.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-tab.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-tooltip.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-popover.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-button.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-collapse.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-carousel.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-typeahead.js"></script>
+        <script type="text/javascript" src="/script/assets/js/bootstrap-affix.js"></script>
+        <script type="text/javascript" src="/script/assets/js/application.js"></script>
+        <script type="text/javascript" src="/script/script.js"></script>
+        <script type="text/javascript" src="/script/bootbox.min.js"></script>
+        <script type="text/javascript" src="/script/jquery.gritter.js"></script>
+
+
+
+        <title>Connect'Home Interface</title>
+
+        <link  href="/script/assets/css/bootstrap.css" rel="stylesheet" media="screen" >
+        <link  href="/script/assets/css/bootstrap-responsive.css" rel="stylesheet" >
+        <link  href="/script/assets/css/docs.css" rel="stylesheet" >
+        <link  href="/script/assets/css/footer.css" rel="stylesheet" >
+        <link rel="stylesheet" type="text/css" href="../css/jquery.gritter.css" >
+        <link rel="stylesheet" type="text/css" href="../css/default.css" > 
+
+
+        <style type="text/css">
+            #contain {
+                padding-top: 20px;
+            }
+        </style>
+
+    </head>
+    <body id="">
+
+
+
+        <?php $_ENV['super_move'] = 0; ?>
+        <div class="navbar navbar-inverse navbar-fixed-top" style="width:auto">
+            <div class="navbar-inner" >
+                <div class="container" >
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+
+
+                    <!-- if 'computer' display Connect'home else display logo -->                    
+                    <?php
+                    if (isset($_SESSION['computer'])) {
+                        if ($_SESSION['computer'] == 1) {
+                            echo'<div class="pull-left">';
+
+                            echo '<a href="/"><img id="logo" src="../images/mini_logo.gif"></a>';
+                            echo '<a class="brand" href="/">Connect\'Home</a>';
+                        } else {
+                            echo'<div class="pull-left">';
+                            echo '<a href="/"><img id="logo" src="../images/mini_logo.gif" ></a>';
+                        }
+                        echo '</div>';
+                    }
+                    ?>
+
+                    <!-- right of navbar -->
+                    <div class="pull-right">
+                        <?php
+                        if (isset($_SESSION['Connected'])) {//si on est connecté
+                            if ($_SESSION['computer'] == 1) {
+                                echo '<a class="brand" id="page" href="/Profile/Home" >';
+                            } else {
+                                echo '<a class="brand" id="page" href="/Profile/HomePhone" >';
+                            }
+                            echo $_SESSION['Name'];
+                            echo '</a>';
+                        } else {
+                            if (isset($_SESSION['computer'])) {
+                                if ($_SESSION['computer'] == 1) {
+                                    echo '<a class="brand" id="page" href="/Management/index" >Log In</a>';
+                                } else {
+                                    echo '<a class="brand" id="page" href="/Management/IndexPhone" >Log In</a>';
+                                }
+                            }
+                        }
+                        ?>   
+
+                        <a class="brand" href="/management/logout">
+                            <?php
+                            if (isset($_SESSION['Connected']))
+                                echo 'Log Out';
+                            ?>
+                        </a>
+                        <a class="brand">
+                            <?php
+                            //clock and date
+                            // echo '<script> window.onload = function(){ date_heure(\'date_heure\');};</script>';
+                            if (isset($_SESSION['computer'])) {
+                                if ($_SESSION['computer'] == 1) {
+                                    echo '<span id="date_heure"></span>';
+                                }
+                            }
+                            ?>
+                        </a>
+                    </div>
+
+                    <div class="nav-collapse collapse">
+
+
+                        <ul class="nav">
+
+                            <!-- HOME -->
+                            <li <?php if ($_SESSION['current'] == 'home') echo 'class="active"'; ?>><a href="/" id="colorHome"><i class="icon-home icon-white"></i> Home</a
+                                ></li>
+
+                            <!-- MANAGEMENT -->
+<!--                            <li <?php if ($_SESSION['current'] == 'management') echo 'class="active"'; ?>><a href="/Management/index"><i class="icon-pencil icon-white"></i> Management</a></li>-->
+
+                            <?php
+                            if ($_SESSION['computer'] == 1) {
+
+                                echo '<li ';
+                                if ($_SESSION[
+                                        'current'] == 'management')
+                                    echo 'class="active">';
+                                else
+                                    echo '>';
+                                echo '<a href="/Management/index" id="colorManagement"><i class="icon-pencil icon-white"></i> Management</a></li>';
+                            }else {
+
+                                echo '<li ';
+                                if ($_SESSION[
+                                        'current'] == 'management')
+                                    echo 'class="active">';
+                                else
+                                    echo '>';
+                                echo '<a href="/Management/IndexPhone" id="colorManagement"><i class="icon-pencil icon-white"></i> ManagementPhone</a></li>';
+                            }
+                            ?>
+
+
+                            <!-- MEMBERS -->
+                            <?php
+                            if (isset($_SESSION['computer'])) {
+                                if ($_SESSION['computer'] == 1) {
+
+
+                                    echo '<li ';
+                                    if ($_SESSION['current'] ==
+                                            'members')
+                                        echo 'class="active">';
+                                    else
+                                        echo '>';
+                                    echo '<a href = "/Members/index" id="colorMembers"><i class = "icon-user icon-white"></i> Members</a></li>';
+                                }
+                            }
+//                            else { ##############################################################################################
+//                                echo '<li ';
+//                                if ($_SESSION['current'] == 'members')
+//                                    echo 'class="active">';
+//                                else
+//                                    echo '>';
+//                                echo '<a href = "/Members/index"><i class = "icon-user icon-white">Members</i></a></li>';
+//                            }
+                            ?>
+
+
+                            <!-- HISTORY -->
+                            <?php
+                            if ($_SESSION['computer'] == 1
+                            ) {
+                                echo '<li ';
+                                if ($_SESSION[
+                                        'current'] == 'history')
+                                    echo 'class="active">';
+                                else
+                                    echo '>';
+                                echo '<a href="/History/index" id="colorHistory"><i class="icon-book icon-white"></i> History</a></li>';
+                            }
+//                            else { ############################################################################################
+//                                echo '<li ';
+//                                if ($_SESSION['current'] == 'history')
+//                                    echo 'class="active">';
+//                                else
+//                                    echo '>';
+//                                echo '<a href="/History/index"><i class="icon-book icon-white"></i>History</a></li>';
+//                            }
+                            ?>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id="contain">            
+            <div class="row">

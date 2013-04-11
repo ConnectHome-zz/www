@@ -1,0 +1,41 @@
+﻿<?php
+
+echo "<tr>";
+echo "<th><h4>NAME</h4></th>";
+#  echo "<th><h4>ID</h4></th>";
+echo "<th><h4>TYPE</h4></th>";
+echo "<th><h4>ADMIN</h4></th>";
+if (isset($_SESSION['admin']))
+    if ($_SESSION['admin'] == 1) {
+        echo "<th><h4>DELETE</h4></th>";
+        echo "<th><h4>EDIT</h4></th>";
+    }
+echo "</tr>";
+
+foreach ($members as $member) {
+    echo '<tr >';
+    echo '<th >' . $member->getName() . '</th>';
+    #       echo '<th>' . $membre->getId() . '</th>';
+    echo '<th>' . $member->getAdult() . '</th>';
+    echo '<th>' . $member->getIsadmin() . '</th>';
+    if (isset($_SESSION['id'])) {
+        if ($member->getId() != $_SESSION['id']) {
+            if (isset($_SESSION['admin']))
+                if ($_SESSION['admin'] == 1)
+                    echo '<th><a href="/Members/delete?id=' . $member->getId() . '" class="btn btn-primary" ">Delete &raquo;</a></th>';
+        }
+        else
+            echo '<th></th>';
+    }
+    else
+        echo '<th></th>';
+
+    if (isset($_SESSION['admin']))
+        if ($_SESSION['admin'] == 1) {
+            $name = "'" . $member->getName() . "'";
+           echo '<th><button class="btn btn-primary" onclick="EditmemberAjax(' . $name . ','.$member->GetId() .')">Edit &raquo;</button></th>';
+        }else
+            echo '<th></th>';
+    echo '</tr>';
+}
+?>

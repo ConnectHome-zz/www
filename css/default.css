@@ -1,0 +1,78 @@
+/*
+your css here
+*/
+body{
+    /*    background-image: url('../images/wallpaper.jpg');*/
+    /*    background-color: orange;
+        background-attachment: fixed;
+        color: black;
+        position: relative;*/
+}
+
+#widget_1d621e572d9279b137fb9ee55f8c1612{
+
+
+    margin: auto;
+
+}
+#historyCss{
+    /*    background-image: url('../images/wallpaper.jpg');*/
+    background-color: #9999FF;
+    background-attachment: fixed;
+    color: black;
+    position: relative;
+}
+
+#colorHistory:hover{
+    color: #33CCFF;
+    background-color: transparent;    
+}
+
+#managementCss{
+    /*    background-image: url('../images/wallpaper.jpg');*/
+    background-color: #FFA035;
+    background-attachment: fixed;
+    color: black;
+    position: relative;
+}
+
+#colorManagement:hover{
+    color: orange;
+    background-color: transparent;    
+}
+
+#homeCss{
+    /*    background-image: url('../images/wallpaper.jpg');*/
+    background-color: #0c7100;
+    background-attachment: fixed;
+    color: black;
+    position: relative;
+}
+
+#colorHome:hover{
+    color: #32CD32;
+    background-color: transparent;    
+}
+
+
+#membersCss{
+    /*    background-image: url('../images/wallpaper.jpg');*/
+    background-color: #BB2900;
+    background-attachment: fixed;
+    color: black;
+    position: relative;
+}
+
+#colorMembers:hover{
+    color: #FF2900;
+    background-color: transparent;
+}
+
+#lamp{
+    width:20px;
+}
+
+#tableUser{
+    background-color: white;
+}
+

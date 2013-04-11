@@ -1,0 +1,41 @@
+<script>
+    window.onload = function() {
+        document.body.id="historyCss";
+        date_heure('date_heure');
+    };
+</script>
+
+
+<div class="well pagination-centered">
+        <legend><h3>Command history</h3></legend>
+        <p>You can see the last actions done.</p>
+
+        <?php
+        if ($history != "") {
+            echo ' <table id="table" class="table table-hover" >';
+            echo ' <tr>';
+            echo ' <th>ID</th>';
+            echo ' <th>Name</th>';
+
+            echo '  <th>Date</th>';
+            echo ' </tr>';
+
+            foreach ($history as $ordre) {
+
+                echo '<td>' . $ordre['IDH'] . '</td>';
+                echo '<td>' . $ordre['nameH'] . '</td>';
+                echo '<td>' . $ordre['Date'] . '</td>';
+                echo '</tr>';
+            }
+            echo '</table>';
+            echo '<a id="btnn" onclick="raz_history()" class="btn btn-large btn-primary">Delete history</a>';
+        }
+        else
+            echo "<p>no history yet</p>"
+            ?>
+
+    </div>
+</div>
+</div>
+
+

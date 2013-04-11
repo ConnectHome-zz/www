@@ -1,0 +1,98 @@
+<script>
+    window.onload = function() {
+        document.body.id="managementCss";
+        date_heure('date_heure');
+    };
+</script>
+
+<div class="span12">
+    <div class="well pagination-centered">
+        <legend><h3>Edit Scenario</h3></legend>
+        <p>Please fill the form</p>
+
+    </div>
+    <div  class="row-fluid">
+        <div class="span4 offset4">
+
+
+
+            <div class ="well pagination-centered">
+                <?php echo '<form action="/Profile/scenarioEditValid?scenId='.$scenar->getId().'" method="post" onsubmit=return validateFormNewScenar()>';?>
+                <form action="/Profile/scenarioEditValid?scenId" method="post" onsubmit="return validateFormNewScenar()">
+                    <fieldset>
+                        <legend>Enter your information</legend>
+
+                        <label><strong>Scenario Name</strong></label>
+                        <div id="ErrorScenarName">
+                            <input class ="input" type="text" placeholder="Scenario Name..." id="scenario_name" name = "name" value="<?php echo $scenar->getName(); ?>" >
+                        </div>
+
+                        <label><strong>Description</strong></label>
+                        <div id="ErrorDesc">
+                            <textarea rows="3" class="" id="description" name="desc" ><?php echo $scenar->getDesc(); ?></textarea>
+                        </div>
+
+                        
+
+                        <div class="control-group">  
+                            <label class="control-label" for="select01"><strong>Choose the associated movement</strong></label>  
+                            <div class="controls ">  
+
+                                <?php
+                                $ii = 0;
+
+                                $move = true;
+                                echo '<select id="select01Move" name="formMouvement">';
+                                if($movements!="error" )
+                                if (isset($movements) and ($movements != "error")) {
+                                    foreach ($movements as $movement) {
+                                        echo '<option>' . $movement['nameM'] . '</option>';
+                                    }
+                                } else {
+                                    echo 'No movements available';
+                                    $move = false;
+                                }
+                                echo '</select>';
+                                ?>                                           
+                            </div> 
+                        </div> 
+
+                        <input type="hidden" value="<?php echo $count; ?>" id="theValue" /><br>
+                        <a  class="btn" onclick="add_action()" > Add action</a>
+                        <a  class="btn btn-danger" onclick="delete_action()" > Delete action</a>
+                        <div class="control-group" id="actions_zone"><br/>
+                            <?php
+                            $i = 1;
+                            foreach ($scenar->getActions() as $act) {
+                                // add action
+
+                                echo '<div id="mon'.$i.'Div>"';
+                                echo ' <label class="control-label" for="select01">Choose an associated action</label>';
+                                echo '<div class="controls">';
+
+                                echo '<select id="select2" name="form' . $i . 'Action">';
+                                foreach ($actions as $action) {
+                                    echo '<option id="' . $action->getId() . ' ">' . $action->getName() . '</option>';
+                                }
+
+                                echo ' </select>';
+                                echo '</div>';
+                                echo '</div>';
+                                $i++;
+                            }
+                            ?>
+                        </div>
+
+
+                        <?php
+                        if ($move)
+                            echo '<input type="submit" class = "btn btn-success btn-large" value="Validate" />';
+                        else
+                            echo '<a class="btn  btn-warning btn-large" href="/Profile/home">Go Back</a>';
+                        ?>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div> 
+</div>

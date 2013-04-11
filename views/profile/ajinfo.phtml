@@ -1,0 +1,44 @@
+﻿<p>Name: <?php echo $_POST['Name']; ?></p>
+<p>Age: <?php echo $_POST['formAge']; ?></p>
+
+<!-- edit button -->
+<a class="btn" onclick="ShowEdit()">Edit</a>
+
+<!-- edit information user form -->
+<form id="form_edit"  method="post"  style="display:none" action="/Profile/ajInfo">
+    <fieldset>
+        <!-- user name field -->
+        <label>Name</label>
+        <div id="ErrorNameUser">
+            <input class ="input" type="text" value="<?php echo $_POST['Name']; ?>" id="Name" name = "Name" >
+        </div>
+
+        <!-- new password field -->
+        <label>New Password</label>
+        <div id="ErrorPswd1">
+            <input class ="input" type="text" placeholder="<?php echo $_POST['Pswd1']; ?>" id="Pswd1" name = "Pswd1" >
+        </div>
+
+        <!-- repeated password field -->
+        <label>Repeat password</label>
+        <div id="ErrorPswd2">
+            <input class ="input" type="text" placeholder="<?php echo $_POST['Pswd2']; ?>" id="Pswd2" name = "Pswd2" >
+        </div>
+
+        <!-- age checkbox -->
+        <label>Age</label>
+        <div class="controls">  
+            <select id="select01" name="formAge">
+                <option <?php if ($_POST['formAge'] == "adult") echo 'selected="selected"' ?> >adult</option>
+                <option <?php if ($_POST['formAge'] == "child") echo 'selected="selected"' ?> >child</option>
+            </select>  
+        </div>
+
+        <!-- update button -->
+        <!--<a  class="btn btn-success btn-large" onclick="validateFormEdit()">Update</a>
+        <a  class="btn btn-success btn-large" onclick="validateFormEdit()">Update</a>-->
+    </fieldset>
+    <input class="btn btn-success btn-large" type="submit" value="Update" id="submit_form_btn"/>
+</form>
+
+

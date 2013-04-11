@@ -1,0 +1,15 @@
+<?php
+
+if (isset($movements)) {
+    foreach ($movements as $movement) {
+        if(isset($movement['nameM']))
+                echo '<option>'.$movement['nameM'].'</option>';
+        else {
+            echo '<option>No movements available</option>';
+            $move = false;
+        }
+    }
+}
+?>
+
+

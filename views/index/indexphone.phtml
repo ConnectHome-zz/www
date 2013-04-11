@@ -1,0 +1,179 @@
+<script>
+    window.onload = function() {
+        document.body.id="homeCss";
+        date_heure('date_heure');
+    };
+</script>
+
+<div class="span8 offset2">    
+    <div class="well text-center pagination-centered">
+        <legend><h3>This is the home phone page</h3></legend> You can see the users and their data.
+        <p><a class="btn btn-primary btn-large hidden-phone" href="/Management/indexPhone">Go to your profile &raquo; &raquo;</a></p>
+    </div>
+  </div>
+
+    <div style="margin:0" >
+<!--        <div class="container-fluid"> -->
+            <div id="myCarousel" class="carousel slide span6 offset3">
+
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                    <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->                   
+                    <div class="active item">
+
+                        <div class="well pagination-centered">
+                            <legend>Lightening</legend><br><br>
+                            <?php
+                            if (isset($_SESSION['Name'])) {
+                                echo '<table class="table table-hover table-bordered">';
+                                foreach ($members as $mem) {
+                                    $nblamp = 0;
+                                    $nboven = 0;
+                                    $nbobj = 0;
+                                    if ($mem->getName() == $_SESSION['Name']) {
+                                        foreach ($mem->getScenarios() as $scen) {
+                                            foreach ($scen->getActions() as $act) {
+                                                if ($act->getActuator() == "LAMP1" && $nblamp == 0) {
+                                                    $nblamp = 1;
+                                                    $nbobj++;
+                                                    echo '<tr>';
+                                                    echo '<td>';
+                                                    echo '<a href="/index/index"><img id="lamp" src="../images/lamp.jpg" width="100px"></img></a>';
+                                                    echo '</td>';
+                                                    echo '<td>';
+                                                    echo 'Status : ' . $act->getAction() . '';
+                                                    echo '</td>';
+                                                    echo '</tr>';
+                                                }
+                                                if ($act->getActuator() == "OVEN1" && $nboven == 0) {
+                                                    $nboven = 1;
+                                                    $nbobj++;
+                                                    echo '<tr>';
+                                                    echo '<td>';
+                                                    echo '<a href="/index/index"><img id="oven" src="../images/oven.jpg" width="100px"></img></a>';
+                                                    echo '</td>';
+                                                    echo '<td>';
+                                                    echo 'Status : ' . $act->getAction() . '';
+                                                    echo '</td>';
+                                                    echo '</tr>';
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                echo '</table>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->                   
+                    <div class="item">
+
+                        <div class="well pagination-centered">
+                            <legend>Appliance</legend><br><br>
+                            <?php
+                            if (isset($_SESSION['Name'])) {
+                                echo '<table class="table table-hover table-bordered">';
+                                foreach ($members as $mem) {
+                                    $nblamp = 0;
+                                    $nboven = 0;
+                                    $nbobj = 0;
+                                    if ($mem->getName() == $_SESSION['Name']) {
+                                        foreach ($mem->getScenarios() as $scen) {
+                                            foreach ($scen->getActions() as $act) {
+                                                if ($act->getActuator() == "LAMP1" && $nblamp == 0) {
+                                                    $nblamp = 1;
+                                                    $nbobj++;
+                                                    echo '<tr>';
+                                                    echo '<td>';
+                                                    echo '<a href="/index/index"><img id="lamp" src="../images/lamp.jpg" width="100px"></img></a>';
+                                                    echo '</td>';
+                                                    echo '<td>';
+                                                    echo 'Status : ' . $act->getAction() . '';
+                                                    echo '</td>';
+                                                    echo '</tr>';
+                                                }
+                                                if ($act->getActuator() == "OVEN1" && $nboven == 0) {
+                                                    $nboven = 1;
+                                                    $nbobj++;
+                                                    echo '<tr>';
+                                                    echo '<td>';
+                                                    echo '<a href="/index/index"><img id="oven" src="../images/oven.jpg" width="100px"></img></a>';
+                                                    echo '</td>';
+                                                    echo '<td>';
+                                                    echo 'Status : ' . $act->getAction() . '';
+                                                    echo '</td>';
+                                                    echo '</tr>';
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                echo '</table>';
+                            }
+                            ?>
+                        </div>
+
+                    </div>
+                    <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->                   
+                    <div class="item">
+
+                        <div class="well pagination-centered">
+                            <legend>Security</legend><br><br>
+                            <?php
+                            if (isset($_SESSION['Name'])) {
+                                echo '<table class="table table-hover table-bordered">';
+                                foreach ($members as $mem) {
+                                    $nblamp = 0;
+                                    $nboven = 0;
+                                    $nbobj = 0;
+                                    if ($mem->getName() == $_SESSION['Name']) {
+                                        foreach ($mem->getScenarios() as $scen) {
+                                            foreach ($scen->getActions() as $act) {
+                                                if ($act->getActuator() == "LAMP1" && $nblamp == 0) {
+                                                    $nblamp = 1;
+                                                    $nbobj++;
+                                                    echo '<tr>';
+                                                    echo '<td>';
+                                                    echo '<a href="/index/index"><img id="lamp" src="../images/lamp.jpg" width="100px"></img></a>';
+                                                    echo '</td>';
+                                                    echo '<td>';
+                                                    echo 'Status : ' . $act->getAction() . '';
+                                                    echo '</td>';
+                                                    echo '</tr>';
+                                                }
+                                                if ($act->getActuator() == "OVEN1" && $nboven == 0) {
+                                                    $nboven = 1;
+                                                    $nbobj++;
+                                                    echo '<tr>';
+                                                    echo '<td>';
+                                                    echo '<a href="/index/index"><img id="oven" src="../images/oven.jpg" width="100px"></img></a>';
+                                                    echo '</td>';
+                                                    echo '<td>';
+                                                    echo 'Status : ' . $act->getAction() . '';
+                                                    echo '</td>';
+                                                    echo '</tr>';
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                echo '</table>';
+                            }
+                            ?>
+                        </div>
+
+                    </div>
+                    <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->                   
+                </div>
+                <!-- Carousel nav -->
+                <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+            </div>
+        </div>
+  
+</div>
+</div>
+
+</body>
+</html>

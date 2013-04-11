@@ -1,0 +1,74 @@
+<script>
+
+    $(document).ready(function() {
+        $('.carousel').carousel({interval: 2000});
+        document.body.id = "homeCss";
+        date_heure('date_heure');
+
+    });
+</script>
+
+<div class="span12">
+    <div class="well text-center pagination-centered"> 
+        <legend><h3>This is the home page</h3></legend> You can see the users and their data.
+    </div>
+
+    <!--<a class="btn" href="/api/ParseXML">Parse XML</a>-->
+
+    <div class="span8 offset2">
+
+        <div id="myCarousel" class="carousel slide" style="height: 275px; background-color: rgb(245,245,245);">
+        
+            <!-- Carousel items -->
+            <div class="carousel-inner" >
+                <div class="active item" >
+                    <div class="well  pagination-centered">
+                        <h3>Weather</h3><br><br>
+                        <div id="widget_1d621e572d9279b137fb9ee55f8c1612"  >
+                            <a href="http://www.my-meteo.fr/previsions+meteo+france/paris.html" title="M&eacute;t&eacute;o Paris">M&eacute;t&eacute;o Paris</a>
+                            <script type="text/javascript" src="http://www.my-meteo.fr/meteo+webmaster/widget/js.php?ville=251&amp;format=carre&amp;nb_jours=1&amp;temps&amp;icones&amp;vent&amp;precip&amp;c1=414141&amp;c2=21a2f3&amp;c3=d4d4d4&amp;c4=FFF&amp;id=1d621e572d9279b137fb9ee55f8c1612"></script>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="well pagination-centered">
+                        <h3>Actuators</h3><br><br>
+                        <?php
+                        echo '<table class="table table-hover table-bordered">';
+                        echo'<tr class="info">
+                                <td><strong><div class="pagination-centered">ID</div></strong></td>
+                                <td><strong><div class="pagination-centered">Name</div></strong></td>
+                            </tr>';
+                        
+                        $i = 0;
+                        if(isset($actuator))
+                        foreach ($actuator as $actu) {
+                            echo '<tr>';
+                                echo '<td>';
+                                echo $actu;
+                                echo '</td>';
+                            
+                                echo '<td>';
+                                echo $name[$i];
+                                echo '</td>';
+                            
+                                $i++;
+                            echo '</tr>';
+                        }
+                        echo '</table>';
+                        ?>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- Carousel nav -->
+            <a class="carousel-control left " href="#myCarousel" data-slide="prev">&lsaquo;</a>
+            <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+

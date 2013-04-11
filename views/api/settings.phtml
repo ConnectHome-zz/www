@@ -1,0 +1,67 @@
+<script>
+    window.onload = function() {
+        document.body.id="managementCss";
+        date_heure('date_heure');
+    };
+</script>
+
+
+<div class="well pagination-centered">
+    <h2>Settings</h2>
+</div>
+
+<div class="span12">
+<!-- Edit Form --> 
+<div class="span6" style="margin:0">
+<div class="well span5 pagination-centered">
+    <form id="form_edit"  method="post" action="/API/zibase?cmd=ip" >
+        <fieldset>
+
+            <legend><h2>Ip Zibase</h2></legend>
+            <input id="ip_zibase" name="ip_zibase" type="text" value="<?php echo $_SESSION['ip_zibase']; ?>"/>
+            <br><input class="btn btn-success btn-large" type="submit" value="Update" id="submit_form_btn"/>
+        </fieldset>
+    </form>
+</div>
+
+<div class="well span5  pagination-centered">
+    <a class="btn btn-large" onclick="actuator();">Get Actuator</a>
+</div>
+
+
+</div>
+
+<div class="well span5 pagination-centered">
+    <form id="form_edit"  method="post" action="/API/zibase?cmd=mdp" >
+        <fieldset>
+
+            <legend><h2>Authentification zibase</h2></legend>
+
+
+            <p>Name</p>
+            <div class="input-prepend">
+                <span class="add-on">
+                    <i class="icon-user"></i>
+                </span>
+                <input id="name_zibase" name="name_zibase" type="text" />
+            </div>
+
+            <br>
+            <p>Password</p>
+            <div class="input-prepend">
+                <span class="add-on">
+                    <i class="icon-lock"></i>
+                </span>
+                <input id="pswd_zibase" name="pswd_zibase" type="text" />
+            </div>
+
+
+
+            <br><input class="btn btn-success btn-large" type="submit" value="Update" id="submit_form_btn"/>
+        </fieldset>
+    </form>
+</div>
+</div>
+
+</div>
+</div>

@@ -1,0 +1,24 @@
+
+<?php
+if (isset($_SESSION['computer'])) {
+    if ($_SESSION['computer'] == 1) {
+        echo '<script type="text/javascript">';
+        echo 'setTimeout("refresh()", 2000);'; //set notification fonction
+        echo '</script>';
+    }
+}
+?>
+<div id="add-regular"></div>
+<!--<footer class="footer" >
+    <div class="container">
+        <p>All rights reserved © 2013 Connect'Home - ECE </p>
+        <ul class="footer-links">
+            <li> <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a></li>
+        </ul>
+
+    </div>
+</footer>-->
+
+
+</body>
+</html>
