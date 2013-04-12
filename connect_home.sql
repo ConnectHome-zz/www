@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 3.4.10.1
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Jeu 11 Avril 2013 à 20:33
--- Version du serveur: 5.5.24-log
--- Version de PHP: 5.4.3
+-- Généré le : Ven 12 Avril 2013 à 23:09
+-- Version du serveur: 5.5.20
+-- Version de PHP: 5.3.10
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -34,17 +34,7 @@ CREATE TABLE IF NOT EXISTS `actions` (
   `status` tinyint(1) NOT NULL,
   `typeA` varchar(255) NOT NULL,
   PRIMARY KEY (`IDA`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
---
--- Contenu de la table `actions`
---
-
-INSERT INTO `actions` (`IDA`, `nameA`, `descA`, `actuator`, `status`, `typeA`) VALUES
-(1, 'lampe blanche on', 'desc', 'D1', 1, 'adult'),
-(2, 'lampe blanche off', 'desc', 'D1', 0, 'adult'),
-(3, 'lampe noire on', 'desc', 'G1', 1, 'adult'),
-(4, 'lampe noire off', 'desc', 'G1', 0, 'adult');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -59,18 +49,6 @@ CREATE TABLE IF NOT EXISTS `actuators` (
   `category` varchar(255) NOT NULL,
   PRIMARY KEY (`IDE`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
---
--- Contenu de la table `actuators`
---
-
-INSERT INTO `actuators` (`IDE`, `nameE`, `status`, `category`) VALUES
-(1, 'Capteur', 0, 'adulte'),
-(2, 'Capteur', 0, 'adulte'),
-(3, 'Capteur', 0, 'adulte'),
-(4, 'Capteur', 0, 'adulte'),
-(5, 'Capteur', 0, 'adulte'),
-(6, 'Capteur', 0, 'adulte');
 
 -- --------------------------------------------------------
 
@@ -109,13 +87,6 @@ CREATE TABLE IF NOT EXISTS `controllers` (
   PRIMARY KEY (`IDC`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
---
--- Contenu de la table `controllers`
---
-
-INSERT INTO `controllers` (`IDC`, `nameC`, `descC`, `IDU`) VALUES
-(1, 'Kinect', 'Movement controller, do a wave with your hand to start a movement', 2);
-
 -- --------------------------------------------------------
 
 --
@@ -127,15 +98,7 @@ CREATE TABLE IF NOT EXISTS `history` (
   `nameH` varchar(255) NOT NULL,
   `Date` datetime NOT NULL,
   PRIMARY KEY (`IDH`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Contenu de la table `history`
---
-
-INSERT INTO `history` (`IDH`, `nameH`, `Date`) VALUES
-(1, 'David', '2013-04-11 09:56:28'),
-(2, 'David', '2013-04-11 09:57:13');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
 -- --------------------------------------------------------
 
@@ -150,16 +113,7 @@ CREATE TABLE IF NOT EXISTS `movements` (
   `IDC` int(255) NOT NULL,
   PRIMARY KEY (`IDM`,`IDC`),
   KEY `movements_controller_fk` (`IDC`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
-
---
--- Contenu de la table `movements`
---
-
-INSERT INTO `movements` (`IDM`, `nameM`, `descM`, `IDC`) VALUES
-(1, 'Swipe Left', 'Do a swipe to the left', 1),
-(2, 'Swipe Right', 'Do a swipe to the right', 1),
-(3, 'Push', 'Move your hand to Kinect', 1);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -177,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `scenarios` (
   PRIMARY KEY (`IDS`),
   KEY `scenarios_movement_fk` (`IDM`),
   KEY `scenarios_user_fk` (`IDU`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=53 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 -- --------------------------------------------------------
 
@@ -192,15 +146,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL,
   `admin` tinyint(1) NOT NULL,
   PRIMARY KEY (`IDU`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Contenu de la table `users`
 --
 
 INSERT INTO `users` (`IDU`, `nameU`, `typeU`, `password`, `admin`) VALUES
-(2, 'David', 'adult', 'coucou', 1),
-(11, 'salut', 'child', 'salut', 0);
+(1, 'Connecthome', 'adult', 'connecthome', 1);
 
 -- --------------------------------------------------------
 
@@ -219,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `zibase` (
 --
 
 INSERT INTO `zibase` (`Name`, `Ip`, `Token`) VALUES
-('ZiBASE0052eb', '192.168.137.100', 'e396697d9c');
+('ZiBASE0052eb', '192.168.137.36', 'e396697d9c');
 
 --
 -- Contraintes pour les tables exportées
