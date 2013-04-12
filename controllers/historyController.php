@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * \file      historyController.php
+ * \author    Connect Home
+ * \version   1.0
+ * \date      12/04/2013
+ * \brief     Control the history pages
+ *
+ * \details   This controller is used to display the notification
+ *            and manage the history pages
+ */
 //file inclusion
 require_once dirname(__FILE__) . '/../lightmvc/actionController.php';
 require_once dirname(__FILE__) . '/../model/connect.php';
@@ -11,8 +21,16 @@ require_once dirname(__FILE__) . '/../model/users.php';
 require_once dirname(__FILE__) . '/../model/detectMobile.php';
 require_once dirname(__FILE__) . '/../model/controller.php';
 
+
+/**
+ * \class HistoryController
+ * 
+ */
 class HistoryController extends ActionController {
 
+    /**
+     * A simple function to delete the historic of the actions launched
+     */
     public function resetAction() {
         //SQL connection
         $connect = connection::getInstance();
@@ -25,16 +43,19 @@ class HistoryController extends ActionController {
         $this->_includeTemplate = false;
     }
 
+    /**
+     *  controller of the page which display the history
+     */
     public function indexAction() {
         $toto;
         $_SESSION['current'] = "history";
 
-        //
+
         //SQL connection
         $connect = connection::getInstance();
         //User SQL request
         $sql = "SELECT * FROM history ";
-        //
+
         //Request sending
         $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
         $hist = "";
@@ -44,6 +65,9 @@ class HistoryController extends ActionController {
         $this->history = $hist;
     }
 
+    /**
+     * Check in database if there is a action launched and throw a pop up
+     */
     public function NotificationAction() {
 
         //check if notif
@@ -59,9 +83,10 @@ class HistoryController extends ActionController {
             $hist[] = $data;
             $i++;
         }
-        if ($i == 0) {//si rien
+        if ($i == 0) {//if nothing
             exit();
         } else {
+            //vider la database 
             $sql = "truncate table api";
             $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
 
@@ -77,5 +102,4 @@ class HistoryController extends ActionController {
     }
 
 }
-
 ?>

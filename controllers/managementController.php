@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * \file      managementController.php
+ * \author    Connect Home
+ * \version   1.0
+ * \date      12/04/2013
+ * \brief     Control all the page for management
+ *
+ * \details   This controller display the page for the login action
+ */
 //file inclusion
 require_once dirname(__FILE__) . '/../lightmvc/actionController.php';
 require_once dirname(__FILE__) . '/../model/connect.php';
@@ -11,7 +20,10 @@ require_once dirname(__FILE__) . '/../model/users.php';
 require_once dirname(__FILE__) . '/../model/detectMobile.php';
 require_once dirname(__FILE__) . '/../model/controller.php';
 
-
+/**
+ * \class ManagementController
+ * 
+ */
 class ManagementController extends ActionController {
 
     /**
@@ -24,6 +36,9 @@ class ManagementController extends ActionController {
         }
     }
 
+    /**
+     * Simple function for index in Phone
+     */
     public function indexPhoneAction() {
         $_SESSION['current'] = 'management';
         if (isset($_SESSION['Connected'])) {
@@ -31,6 +46,9 @@ class ManagementController extends ActionController {
         }
     }
 
+    /**
+     * Manage the connection Form
+     */
     public function SigninAction() {
 
         //sql connection
@@ -66,6 +84,9 @@ class ManagementController extends ActionController {
         }
     }
 
+    /**
+     * Manage the connexion  form in Phone
+     */
     public function SigninPhoneAction() {
 
         //sql connection
@@ -99,7 +120,9 @@ class ManagementController extends ActionController {
             $this->redirect("/Profile/homePhone");
         }
     }
-
+/**
+ * reset the session variable when log out
+ */
     public function logoutAction() {
 
         unset($_SESSION['Connected']);

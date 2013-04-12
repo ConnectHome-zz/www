@@ -1,10 +1,20 @@
 <?php
+/**
+* \file      connect.php
+* \author    Connect Home
+* \version   1.0
+* \date      12/04/2013
+* \brief     Model of the Connect class
+*
+* \details   This Model is the code of the Connect class (link to Database)
+*            
+*/
 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
+ /** \class Connection */
 class connection {
 
     private static $_instance = null;
@@ -30,6 +40,7 @@ class connection {
      *
      * @param void
      * @return Singleton
+     *\return the instance of the connection
      */
     //Getter
     public static function getInstance() {

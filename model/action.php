@@ -1,10 +1,21 @@
 <?php
+/**
+* \file      action.php
+* \author    Connect Home
+* \version   1.0
+* \date      12/04/2013
+* \brief     Model of the Action class
+*
+* \details   This Model is the code representation of the actions table 
+*            in the database
+*/
 
 //file inclusion
 require_once dirname(__FILE__) . '/movement.php';
 require_once dirname(__FILE__) . '/user.php';
 require_once dirname(__FILE__) . '/scenario.php';
 
+ /** \class Action */
 class Action {
 
     //statement of resources
@@ -13,13 +24,18 @@ class Action {
     private $desc;
     private $actuator;
     private $action;
-    //private $temps;
     private $adult;
     ////
 
     /**
      * Class constructor
      *
+     *\param $_id The ID of the action
+     *\param $_name The name of the action
+     *\param $_desc The description of the action
+     *\param $_actuator The actuator related to this action
+     *\param $_action The status of the action
+     *\param $_adult The action type
      */
     //Constructor
     public function __construct($_id, $_name, $_desc, $_actuator, $_action, $_adult) {
@@ -32,15 +48,23 @@ class Action {
         $this->adult = $_adult;
     }
 
-    //Getters and setters 
+    //Getters and setters
+    /** 
+    * 
+    *\return the name of the action
+    */
     public function getName() {
         return $this->name;
     }
-
+    
     public function setName($nom) {
         $this->name = $nom;
     }
 
+    /** 
+    * 
+    *\return the ID of the action
+    */
     public function getId() {
         return $this->id;
     }
@@ -49,6 +73,10 @@ class Action {
         $this->id = $id;
     }
 
+    /** 
+    * 
+    *\return the description of the action
+    */
     public function getDesc() {
         return $this->desc;
     }
@@ -57,6 +85,10 @@ class Action {
         $this->desc = $desc;
     }
 
+    /** 
+    * 
+    *\return the actuator of the action
+    */
     public function getActuator() {
         return $this->actuator;
     }
@@ -65,6 +97,10 @@ class Action {
         $this->actuator = $actuator;
     }
 
+    /** 
+    * 
+    *\return the status of the action
+    */
     public function getAction() {
         return $this->action;
     }
@@ -73,6 +109,10 @@ class Action {
         $this->action = $action;
     }
 
+    /** 
+    * 
+    *\return the type allowed (age) for this action 
+    */
     public function getAdult() {
         return $this->adult;
     }
@@ -80,7 +120,6 @@ class Action {
     public function setAdultt($adult) {
         $this->adult = $adult;
     }
-
 }
 
 ?>

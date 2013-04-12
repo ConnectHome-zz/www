@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * \file      managementController.php
+ * \author    Connect Home
+ * \version   1.0
+ * \date      12/04/2013
+ * \brief     Control all the page for member
+ *
+ * \details   This controller display the page and all its fuunction for the mmebers section
+ */
 //file inclusion
 require_once dirname(__FILE__) . '/../lightmvc/actionController.php';
 require_once dirname(__FILE__) . '/../model/connect.php';
@@ -11,7 +20,10 @@ require_once dirname(__FILE__) . '/../model/users.php';
 require_once dirname(__FILE__) . '/../model/detectMobile.php';
 require_once dirname(__FILE__) . '/../model/controller.php';
 
-
+/**
+ * \class MembersController
+ * 
+ */
 class MembersController extends ActionController {
 
     /**
@@ -23,7 +35,11 @@ class MembersController extends ActionController {
         $this->members = $this->getMembers(); //give data to view
         $_SESSION['members'] = $this->members;
     }
-
+/**
+ * 
+ * fontion to get all the member
+ * \return return all the member
+ */
     public function getMembers() {
 
         //statement of resources
@@ -54,6 +70,9 @@ class MembersController extends ActionController {
         return $users;
     }
 
+    /**
+     * function used when a member is delete
+     */
     public function deleteAction() {
         if (isset($_SESSION['Connected']))
             if (($_SESSION['Connected'] == 1) and ($_SESSION['admin'] == 1))//secure
@@ -62,8 +81,10 @@ class MembersController extends ActionController {
         $this->redirect("/Members/index");
     }
 
-    public function editionAction() {//ajax for edit member
-       
+    /**
+     * ajax used for edit member
+     */
+    public function editionAction() {
         //inactivate header/footer
         $this->_includeTemplate = false;
 
@@ -72,7 +93,7 @@ class MembersController extends ActionController {
         } else {
             $typeU = "adult";
         }
-        
+
         if ($_GET['checkboxAdmin'] == 'false') {
             $admin = "0";
         } else {
@@ -85,14 +106,13 @@ class MembersController extends ActionController {
 
             if (($_GET['Name'] == $member->getName()) && ($_GET['CurrName'] != $member->getName() )) {
                 $cpt = false;
-                
             }
         }
 
         //if user doesn't exist
         if ($cpt) {
             //sql connection
-            
+
             if ($_SESSION['Name'] == $_GET['CurrName'])//Current edit current
                 $_SESSION['Name'] = $_GET['Name'];
 
@@ -100,12 +120,12 @@ class MembersController extends ActionController {
             $_GET['Name'] = Users::secure($_GET['Name']);
             $_GET['Pass'] = Users::secure($_GET['Pass']);
             $_GET['Id'] = Users::secure($_GET['Id']);
-            
+
             $sql = "UPDATE users SET nameU='" . $_GET['Name'] . "', typeU='" . $typeU . "',password='" . $_GET['Pass'] . "', admin='" . $admin . "' where IDU ='" . $_GET['Id'] . "'"; //on recupere tout les utilisateurs
             //sending request
             $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
 
-            //appel
+           
             $_SESSION['admin'] = $admin;
             $_SESSION['current'] = 'members';
             $this->members = Users::Getuser(); //give data to view
@@ -114,7 +134,10 @@ class MembersController extends ActionController {
         }
     }
 
-    public function editAction() {// edit a member
+    /**
+     *  edit a member
+     */
+    public function editAction() {
         if (isset($_SESSION['Connected'])) {
             if (($_SESSION['Connected'] == 1) and ($_SESSION['admin'] == 1)) {//blindage de l'adresse
                 //give data to view
@@ -126,4 +149,5 @@ class MembersController extends ActionController {
         else
             $this->redirect("/Members/index"); //forwarding address
     }
+
 }

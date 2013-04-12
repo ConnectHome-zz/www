@@ -1,17 +1,30 @@
 <?php
 
-//file inclusion
+/**
+ * \file      indexController.php
+ * \author    Connect Home
+ * \version   1.0
+ * \date      12/04/2013
+ * \brief     Control the api pages
+ *
+ * \details   This controller display the front page
+ *            of the web site for PC and phone version
+ */
 require_once dirname(__FILE__) . '/../lightmvc/actionController.php';
 require_once dirname(__FILE__) . '/../model/connect.php';
 require_once dirname(__FILE__) . '/../model/action.php';
 require_once dirname(__FILE__) . '/../model/movement.php';
 require_once dirname(__FILE__) . '/../model/user.php';
-require_once dirname(__FILE__) . '/../model/scenario.php'; 
+require_once dirname(__FILE__) . '/../model/scenario.php';
 require_once dirname(__FILE__) . '/../model/users.php';
 require_once dirname(__FILE__) . '/../model/detectMobile.php';
 require_once dirname(__FILE__) . '/../model/controller.php';
 
 
+/**
+ * \class IndexController
+ * 
+ */
 class IndexController extends ActionController {
 
     /**
@@ -35,7 +48,7 @@ class IndexController extends ActionController {
 
 
         //captors
-        
+
         $_SESSION['current'] = 'home';
         //give data to view
         $this->members = Users::Getuser();
@@ -61,24 +74,27 @@ class IndexController extends ActionController {
         $var = curl_exec($ch);
 
         curl_close($ch);
-        
-        
+
+
         $myxml = simplexml_load_string($var);
 
 
-        foreach ($myxml->e as $child) { 
+        foreach ($myxml->e as $child) {
             if ($child->attributes()->t == 'receiverXDom') {
                 $actuator[] = $child->attributes()->c;
                 $name[] = $child->n;
             }
         }
 
-        if(isset($name))
+        if (isset($name))
             $this->name = $name;
-        if(isset($actuator))
+        if (isset($actuator))
             $this->actuator = $actuator;
     }
 
+    /**
+     * Main page of the phone
+     */
     public function indexPhoneAction() {
         // members : getFrontProfiles
         $_SESSION['current'] = 'home';
@@ -87,6 +103,9 @@ class IndexController extends ActionController {
         $_SESSION['members'] = $this->members;
     }
 
+    /**
+     * Get all the available actuator from zibase
+     */
     public function get_elements() {
         //call to the ZIBASE
 
@@ -101,15 +120,13 @@ class IndexController extends ActionController {
             $ip_zibase = $data['Ip'];
         }
         $_SESSION["ip_zibase"] = $ip_zibase;
-        
+
         $ch = curl_init("http://zibase.net/m/get_xml_sensors.php?device=ZiBASE0052eb&token=e396697d9c");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $var = curl_exec($ch);
         curl_close($ch);
 
         $dom = new DomDocument();
-        //$dom->load('reponse.xml');
-
         $dom->loadXML($var);
 
 
@@ -124,7 +141,6 @@ class IndexController extends ActionController {
             }
         }
         $this->tableau = $tab;
-      
     }
 
 }

@@ -1,10 +1,22 @@
 <?php
+/**
+* \file      scenario.php
+* \author    Connect Home
+* \version   1.0
+* \date      12/04/2013
+* \brief     Model of the Scenario class
+*
+* \details   This Model is the code representation of the scenarios table 
+*            in the database
+*            
+*/
 
 //file inclusion
 require_once dirname(__FILE__) . '/action.php';
 require_once dirname(__FILE__) . '/movement.php';
 require_once dirname(__FILE__) . '/user.php';
 
+ /** \class Movement */
 class Scenario {
 
     //statement of resources
@@ -18,7 +30,12 @@ class Scenario {
     ////
     /**
      * Class constructor
-     *
+     * \param $_id The ID of the scenario
+     * \param $_name The name of the scenario
+     * \param $_desc The description of the scenario
+     * \param $_idmovement The ID of the movement launching this scenario
+     * \param $_idcontroller The ID of the controller launching this scenario
+     * \param $_iduser The ID of the user managing this scenario
      */
     //Constructor
     public function __construct($_id, $_name, $_desc, $_idmovement,$_idcontroller, $_iduser) {
@@ -56,14 +73,26 @@ class Scenario {
     }
 
     //Getters and setters
+    /** 
+    * 
+    *\return the name of the scenario
+    */
     public function getName() {
         return $this->name;
     }
-
+    
+    /**
+     * 
+     * set the name of the scenario
+     */
     public function setName($name) {
         $this->name = $name;
     }
 
+    /** 
+    * 
+    *\return the ID of the scenario
+    */
     public function getId() {
         return $this->id;
     }
@@ -72,6 +101,10 @@ class Scenario {
         $this->id = $id;
     }
 
+    /** 
+    * 
+    *\return the actions of the scenario
+    */
     public function getActions() {
         return $this->actions;
     }
@@ -80,6 +113,10 @@ class Scenario {
         $this->actions = $actions;
     }
 
+    /** 
+    * 
+    *\return the movements of the scenario
+    */
     public function getMovement() {
         return $this->movement;
     }
@@ -88,6 +125,10 @@ class Scenario {
         $this->movement = $movement;
     }
 
+    /** 
+    * 
+    *\return the description of the scenario
+    */
     public function getDesc() {
         return $this->desc;
     }

@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * \file      apiController.php
+ * \author    Connect Home
+ * \version   1.0
+ * \date      12/04/2013
+ * \brief     Control the api pages
+ *
+ * \details   This controller control the Zibase fonction
+ *            and the commuunication with the Com module
+ */
 require_once dirname(__FILE__) . '/../lightmvc/actionController.php';
 require_once dirname(__FILE__) . '/../model/connect.php';
 require_once dirname(__FILE__) . '/../model/action.php';
@@ -10,8 +20,15 @@ require_once dirname(__FILE__) . '/../model/users.php';
 require_once dirname(__FILE__) . '/../model/detectMobile.php';
 require_once dirname(__FILE__) . '/../model/controller.php';
 
+/**
+ * \class APIController
+ * 
+ */
 class APIController extends ActionController {
 
+    /**
+     * Change the ip adresse of the zibase and change the id and token
+     */
     public function zibaseAction() {
 
         if ($_GET['cmd'] == "ip") {//change the IP of the zibase
@@ -53,6 +70,9 @@ class APIController extends ActionController {
         $this->redirect("/api/settings");
     }
 
+    /**
+     *  get the actuator of the zibase and reset all scenarios
+     */
     public function actuatorAction() {
 
         $connect = connection::getInstance();
@@ -83,7 +103,6 @@ class APIController extends ActionController {
         foreach ($myxml->e as $child) {
 
 
-
             if ($child->attributes()->t == 'receiverXDom') {
                 $actuator = $child->attributes()->c;
                 $name = $child->n;
@@ -105,6 +124,9 @@ class APIController extends ActionController {
         
     }
 
+    /**
+     *  Parse the xml file provide by the Com server and lauch the orders
+     */
     public function ParseXMLAction() {
 
         $this->_includeTemplate = false;
@@ -125,16 +147,8 @@ class APIController extends ActionController {
         $nameM;
         $descM;
 
-
-
-
-//        if (file_exists('message1.xml')) {
-//            $myxml = simplexml_load_file('message1.xml');
-//        }
         $msg = '<?xml version="1.0" encoding="iso-8859-1"?>' . $_POST['xml'];
-        
 
-        
         print_r($msg);
         $myxml = simplexml_load_string($msg);
 
@@ -171,7 +185,7 @@ class APIController extends ActionController {
                                     $req = mysql_query($sql) or die('ERROR_SQL');
                                     while ($data = mysql_fetch_assoc($req)) {
                                         // scenario selection
-                                        $res[] = $data['IDC']; 
+                                        $res[] = $data['IDC'];
                                         if ($res[0] != 0) {
                                             $ok = 1;
                                         }
@@ -277,36 +291,36 @@ class APIController extends ActionController {
                         }
 
 
-                       
-                            foreach ($res as $s) {
-                               
 
-                                if ($s['status'] == 1)
-                                    $on = "ON";
-                                else
-                                    $on = "OFF";
-                                $sql = "SELECT * FROM zibase";
-                                $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
+                        foreach ($res as $s) {
 
 
-                                while ($data = mysql_fetch_assoc($req)) {
-                                    // scenario selection
-                                    $ip_zibase = $data['Ip'];
-                                }
-                                $text = "http://" . $ip_zibase . "/cgi-bin/domo.cgi?cmd=" . $on . "%20" . $s['actuator'];
+                            if ($s['status'] == 1)
+                                $on = "ON";
+                            else
+                                $on = "OFF";
+                            $sql = "SELECT * FROM zibase";
+                            $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
 
 
-                                $ch = curl_init($text);
-
-                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-
-
-                                $var = curl_exec($ch);
-
-
-                                curl_close($ch);
+                            while ($data = mysql_fetch_assoc($req)) {
+                                // scenario selection
+                                $ip_zibase = $data['Ip'];
                             }
+                            $text = "http://" . $ip_zibase . "/cgi-bin/domo.cgi?cmd=" . $on . "%20" . $s['actuator'];
+
+
+                            $ch = curl_init($text);
+
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+
+
+                            $var = curl_exec($ch);
+
+
+                            curl_close($ch);
+                        }
 
                         break;
                     }
@@ -319,5 +333,4 @@ class APIController extends ActionController {
     }
 
 }
-
 ?>

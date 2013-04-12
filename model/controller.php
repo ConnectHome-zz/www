@@ -1,10 +1,22 @@
 <?php
+/**
+* \file      controller.php
+* \author    Connect Home
+* \version   1.0
+* \date      12/04/2013
+* \brief     Model of the Controller class
+*
+* \details   This Model is the code representation of the controllers table 
+*            in the database
+*            
+*/
 
 //file inclusion
 require_once dirname(__FILE__) . '/action.php';
 require_once dirname(__FILE__) . '/user.php';
 require_once dirname(__FILE__) . '/scenario.php';
 
+ /** \class Controller */
 class Controller {
 
     //statement of resources
@@ -15,7 +27,10 @@ class Controller {
     ////
     /**
      * Class constructor
-     *
+     * \param $_id The ID of the controller
+     * \param $_name The name of the controller
+     * \param $_desc The description of the controller
+     * \param $_user The ID of the user controlling it
      */
     //Constructor
     public function __construct($_id, $_name, $_desc, $_user) {
@@ -27,6 +42,10 @@ class Controller {
     }
 
     //Getters and setters
+    /** 
+    * 
+    *\return the name of the controller
+    */
     public function getName() {
         return $this->name;
     }
@@ -35,6 +54,10 @@ class Controller {
         $this->name = $name;
     }
 
+    /** 
+    * 
+    *\return the ID of the controller
+    */
     public function getId() {
         return $this->id;
     }
@@ -43,6 +66,10 @@ class Controller {
         $this->id = $id;
     }
 
+    /** 
+    * 
+    *\return the decription of the controller
+    */
     public function getDesc() {
         return $this->desc;
     }
@@ -51,6 +78,10 @@ class Controller {
         $this->desc = $desc;
     }
     
+    /** 
+    * 
+    *\return the ID of the user controlling it
+    */
     public function getUser() {
         return $this->user;
     }

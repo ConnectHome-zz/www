@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * \file      profileController.php
+ * \author    Connect Home
+ * \version   1.0
+ * \date      12/04/2013
+ * \brief     Control for the management page when you are connected
+ *
+ * \details   This controller control all the page invlove for the profil gestion
+ */
 //file inclusion
 require_once dirname(__FILE__) . '/../lightmvc/actionController.php';
 require_once dirname(__FILE__) . '/../model/connect.php';
@@ -11,11 +20,14 @@ require_once dirname(__FILE__) . '/../model/users.php';
 require_once dirname(__FILE__) . '/../model/detectMobile.php';
 require_once dirname(__FILE__) . '/../model/controller.php';
 
-
+/**
+ * \class ProfileController
+ * 
+ */
 class ProfileController extends ActionController {
 
     /**
-     * Simple index page which links to the main available actions
+     * Function to say to the database that the current user control the kinect
      */
     public function controlkinectAction() {
         $_SESSION['controller'] = "kinect";
@@ -39,6 +51,9 @@ class ProfileController extends ActionController {
         $this->redirect("/Profile/home");
     }
 
+    /**
+     * Function to say to the database that the current user control the microphone
+     */
     public function controlmicroAction() {
 
         $_SESSION['controller'] = "microphone";
@@ -61,11 +76,14 @@ class ProfileController extends ActionController {
         }
         $this->redirect("/Profile/home");
     }
-    
+
+    /**
+     * Function to say to the database that the current user control the bracelet
+     */
     public function controlbraceletAction() {
-        
+
         $_SESSION['controller'] = "bracelet";
-        
+
         if (isset($_SESSION['Connected'])) {
             //Connect to DB
             $connect = connection::getInstance();
@@ -85,6 +103,10 @@ class ProfileController extends ActionController {
         $this->redirect("/Profile/home");
     }
 
+    /**
+     * 
+     * Function for the main page 
+     */
     public function HomeAction() {
 
         $_SESSION['current'] = 'management';
@@ -100,6 +122,10 @@ class ProfileController extends ActionController {
         }
     }
 
+    /**
+     * 
+     * Function for the main page in phone
+     */
     public function HomePhoneAction() {
 
         $_SESSION['current'] = 'management';
@@ -116,6 +142,10 @@ class ProfileController extends ActionController {
         }
     }
 
+    /**
+     * 
+     * Function for the scenario edition 
+     */
     public function editScenarioAction() {
 
         foreach ($_SESSION['members'] as $membres) {
@@ -132,8 +162,7 @@ class ProfileController extends ActionController {
 
         $this->scenar = $scenar;
         $count_act = 0;
-        foreach ($scenar->getActions() as $act)
-        {
+        foreach ($scenar->getActions() as $act) {
             $count_act++;
             $actions[] = $act;
         }
@@ -142,6 +171,10 @@ class ProfileController extends ActionController {
         $this->actions = Users::getAction();
     }
 
+    /**
+     * 
+     * Function for the scenario creation 
+     */
     public function creerscenarioAction() {
 
         $_SESSION['current'] = 'management';
@@ -151,22 +184,26 @@ class ProfileController extends ActionController {
         $_SESSION['controllers'] = $this->controllers;
     }
 
+    /**
+     * 
+     * Function use to add available movement when creating a scenario
+     */
     public function adMoveAction() {
 
         //inactivate template
         $this->_includeTemplate = false;
 
-        $control = $_GET['control']; 
-        
+        $control = $_GET['control'];
+
         //Connect to DB
         $connect = connection::getInstance();
-        
-        $sql = "SELECT IDC FROM controllers WHERE nameC='".$control."'";
+
+        $sql = "SELECT IDC FROM controllers WHERE nameC='" . $control . "'";
         //Request sending
         $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
         while ($data = mysql_fetch_assoc($req)) {
             // scenario selection
-            $controlID[]=$data['IDC'];
+            $controlID[] = $data['IDC'];
         }
 
         //SQL REQUEST
@@ -174,7 +211,7 @@ class ProfileController extends ActionController {
         //Request sending
         $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
         $i = 0;
-        
+
         $all_moves;
         while ($data = mysql_fetch_assoc($req)) {
             // scenario selection
@@ -184,33 +221,33 @@ class ProfileController extends ActionController {
             $all_moves[$i]['IDC'] = $data['IDC'];
             $i++;
         }
-        $mov;     
-        
-        $sql = "SELECT * FROM scenarios WHERE IDU='". $_SESSION['id'] . "' and IDC in (SELECT IDC FROM controllers where nameC ='".$control."')";
+        $mov;
+
+        $sql = "SELECT * FROM scenarios WHERE IDU='" . $_SESSION['id'] . "' and IDC in (SELECT IDC FROM controllers where nameC ='" . $control . "')";
         //Request sending
         $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
         $i = 0;
-        
+
         while ($data = mysql_fetch_assoc($req)) {
 
-           $scenar[$i]['IDS'] = $data['IDS'];
-           $scenar[$i]['nameS'] = $data['nameS'];
-           $scenar[$i]['descS'] = $data['descS'];
-           $scenar[$i]['IDM'] = $data['IDM'];
-           $scenar[$i]['IDC'] = $data['IDC'];
-           $scenar[$i]['IDU'] = $data['IDU'];
-           $i++;
+            $scenar[$i]['IDS'] = $data['IDS'];
+            $scenar[$i]['nameS'] = $data['nameS'];
+            $scenar[$i]['descS'] = $data['descS'];
+            $scenar[$i]['IDM'] = $data['IDM'];
+            $scenar[$i]['IDC'] = $data['IDC'];
+            $scenar[$i]['IDU'] = $data['IDU'];
+            $i++;
         }
         //var_dump($scenar);
-        
-        $i=0;
-        if(isset($scenar)) {
-            echo"POUET1";
-            foreach($scenar as $scen) {
-                $sql = "SELECT * FROM movements WHERE IDM='".$scenar[$i]['IDM']."' and IDC='".$scenar[0]['IDC']."'";
+
+        $i = 0;
+        if (isset($scenar)) {
+
+            foreach ($scenar as $scen) {
+                $sql = "SELECT * FROM movements WHERE IDM='" . $scenar[$i]['IDM'] . "' and IDC='" . $scenar[0]['IDC'] . "'";
                 //Request sending
                 $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
-                while($data = mysql_fetch_assoc($req)) {
+                while ($data = mysql_fetch_assoc($req)) {
                     $used[$i]['IDM'] = $data['IDM'];
                     $used[$i]['nameM'] = $data['nameM'];
                     $used[$i]['descM'] = $data['descM'];
@@ -220,12 +257,12 @@ class ProfileController extends ActionController {
             }
         }
         $add = 0;
-        
-        if(isset($all_moves)) {
+
+        if (isset($all_moves)) {
             foreach ($all_moves as $value) {
                 $add = 0;
                 foreach ($used as $val) {
-                    
+
                     if ($value == $val) {//if movement already exists
                         $add = 1;
                     }
@@ -235,26 +272,26 @@ class ProfileController extends ActionController {
                 }
             }
         }
-        
-        if(!isset($movement))
-        {
+
+        if (!isset($movement)) {
             $movement[] = "";
         }
 
         //give data to view
         $this->movements = $movement;
-        if($this->movements[0])
-        {
+        if ($this->movements[0]) {
             $_SESSION['button'] = 1;
-        }
-        else
-        {
+        } else {
             $_SESSION['button'] = 0;
         }
     }
-    
+
+     /**
+     * 
+     * Function use to add available movement when editing a scenario
+     */
     public function adMoveEditAction() {
-        
+
         foreach ($_SESSION['members'] as $membres) {
             if ($membres->getName() == $_SESSION['Name']) {//find the right people
                 $membre = $membres;
@@ -269,17 +306,16 @@ class ProfileController extends ActionController {
 
         $this->scenar = $scenar;
         $count_act = 0;
-        foreach ($scenar->getActions() as $act)
-        {
+        foreach ($scenar->getActions() as $act) {
             $count_act++;
             $actions[] = $act;
         }
         $this->count = $count_act;
         $this->actions_check = $actions;
         $this->actions = Users::getAction();
-        
+
         $scenId = $_GET['scenario_id'];
-        
+
         //Connect to DB
         $connect = connection::getInstance();
 
@@ -291,31 +327,29 @@ class ProfileController extends ActionController {
             // scenario creation
             $IDC[] = $data['IDC'];
         }
-        
+
         //GET CURRENT MOVEMENT
-        $sql = "SELECT* FROM movements WHERE IDM in(SELECT IDM FROM scenarios WHERE IDS='".$scenId."')";
-        //Request sending
-        $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
-        $i=0;
-        $myMove;
-        while ($data = mysql_fetch_assoc($req)) {
-            // scenario creation
-            $myMove[$i]['IDM'] = $data['IDM'];
-            $myMove[$i]['nameM'] = $data['nameM'];
-            $myMove[$i]['descM'] = $data['descM'];
-            $myMove[$i]['IDC'] = $data['IDC'];
-        }
-        
-        //var_dump($myMove);
-        //exit;
-        
-        //SQL REQUEST
-        $sql = "SELECT* FROM movements WHERE IDC='" . $IDC[0] . "'";
+        $sql = "SELECT* FROM movements WHERE IDM in(SELECT IDM FROM scenarios WHERE IDS='" . $scenId . "')";
         //Request sending
         $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
         $i = 0;
+        $myMove;
+        while ($data = mysql_fetch_assoc($req)) {
+            // scenario creation
+            $myMove['IDM'] = $data['IDM'];
+            $myMove['nameM'] = $data['nameM'];
+            $myMove['descM'] = $data['descM'];
+            $myMove['IDC'] = $data['IDC'];
+        }
+
         
-        
+        //SQL REQUEST
+        $sql = "SELECT * FROM movements WHERE IDC='" . $IDC[0] . "'";
+        //Request sending
+        $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
+        $i = 0;
+
+
         while ($data = mysql_fetch_assoc($req)) {
             // scenario selection
             $all_moves[$i]['IDM'] = $data['IDM'];
@@ -324,11 +358,11 @@ class ProfileController extends ActionController {
             $all_moves[$i]['IDC'] = $data['IDC'];
             $i++;
         }
-    
-            
+
+
         $mov;
         $scenar = $_SESSION['members'][$_SESSION['id']]->getScenarios(); //user scenario
-        $i=0;
+        $i = 0;
         foreach ($scenar as $scen) {
             $mov[$i] = $scen->getMovement(); //get mouvement
             $used[$i]['IDM'] = $mov[$i]->getId();
@@ -339,9 +373,9 @@ class ProfileController extends ActionController {
             $i++;
         }
         $add = 0;
-        
-        if(isset($all_moves)) {
-           
+
+        if (isset($all_moves)) {
+
             foreach ($all_moves as $value) {
                 $add = 0;
                 foreach ($used as $val) {
@@ -349,36 +383,40 @@ class ProfileController extends ActionController {
                         $add = 1;
                     }
                 }
+                if ($value['IDM'] == $myMove['IDM'])
+                    $add = 0;
                 if ($add == 0) {//if movement disengaged
                     $movement[] = $value; //put it in list  
                 }
             }
         }
-        
-        if(!isset($movement))
-        {
+
+        if (!isset($movement)) {
             $movement[] = $myMove[0];
         }
 
         //give data to view
         $this->movements = $movement;
-        if($this->movements[0])
-        {
+        if ($this->movements[0]) {
             $_SESSION['button'] = 1;
-        }
-        else
-        {
+        } else {
             $_SESSION['button'] = 0;
         }
         //var_dump($this->movements);
     }
-    
+
+    /**
+     * ajax for add the button action
+     */
     public function adButtonsAction() {
         //inactivate template
         $this->_includeTemplate = false;
         $this->button = $_SESSION['button'];
     }
-
+    
+    /**
+     * ajax for add an action
+     */
     public function ajActionAction() {
 
         //inactivate template
@@ -387,10 +425,16 @@ class ProfileController extends ActionController {
         $this->actions = $_SESSION['actions'];
     }
 
+    /**
+     * ajax for add a movement
+     */
     public function adMovementAction() {
         $this->_includeTemplate = false;
     }
 
+    /**
+     * validate a scenario a registre it in all table in the database
+     */
     public function scenariovalideAction() {
 
         //SQL connection
@@ -448,7 +492,7 @@ class ProfileController extends ActionController {
                 // Creation of scenarios
                 $tabIDA[] = $data['IDA'];
             }
-            
+
             $tabIDA[0] = Users::secure($tabIDA[0]);
 
             //Insert into table "contains"
@@ -460,9 +504,12 @@ class ProfileController extends ActionController {
         }
         $this->redirect("/Management/index/");
     }
-    
+
+    /**
+     * validate a scenario after edit a registre it in all table in the database
+     */
     public function scenarioEditValidAction() {
-        
+
         //Data storage
         $scenId = $_GET['scenId'];
         $scenario_name = $_POST['name'];
@@ -472,14 +519,14 @@ class ProfileController extends ActionController {
         $scenario_name = Users::secure($scenario_name);
         $desc = Users::secure($desc);
         $movement = Users::secure($movement);
-        
+
         //SQL connection
         $connect = connection::getInstance();
 
         //Statement of resources
         $test = array();
         $i = 1;
-        
+
         //We get the movement ID
         $sql = "SELECT * FROM movements WHERE nameM='" . $movement . "'";
         //Request sending
@@ -489,17 +536,17 @@ class ProfileController extends ActionController {
             $tabIDM[] = $data['IDM'];
             $tabIDM[] = $data['IDC'];
         }
-        
+
         //SCENARIO UPDATE
-        $sql = "UPDATE scenarios SET nameS='" . $_POST['name'] . "', descS='" . $_POST['desc'] . "', IDM='" . $tabIDM[0] . "', IDC='" . $tabIDM[1] . "' WHERE IDS='".$scenId."'";    
+        $sql = "UPDATE scenarios SET nameS='" . $_POST['name'] . "', descS='" . $_POST['desc'] . "', IDM='" . $tabIDM[0] . "', IDC='" . $tabIDM[1] . "' WHERE IDS='" . $scenId . "'";
         //Request sending 
         $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
-        
+
         //ACTIONS UPDATE
-        $sql = "DELETE FROM contains where IDS ='" . $scenId ."'";
+        $sql = "DELETE FROM contains where IDS ='" . $scenId . "'";
         //Request sending 
         $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
-        
+
         while (isset($_POST['form' . $i . 'Action'])) {//Loop on the number of actions
             $action[$i] = $_POST['form' . $i . 'Action'];
 
@@ -521,10 +568,13 @@ class ProfileController extends ActionController {
             $i++;
             unset($tabIDA);
         }
-        
+
         $this->redirect("/Management/index/");
     }
 
+    /**
+     * Add an user
+     */
     public function ajUserAction() {
         $this->_includeTemplate = false;
 
@@ -569,10 +619,9 @@ class ProfileController extends ActionController {
         $this->redirect("/Profile/Home");
     }
 
-    public function connect_kinectAction() {
-        
-    }
-
+    /**
+     * update the profile
+     */
     public function ajInfoAction() {
 
         $this->_includeTemplate = false;

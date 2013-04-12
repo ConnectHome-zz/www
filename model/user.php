@@ -1,10 +1,22 @@
 <?php
+/**
+* \file      user.php
+* \author    Connect Home
+* \version   1.0
+* \date      12/04/2013
+* \brief     Model of the User class
+*
+* \details   This Model is the code representation of the users table 
+*            in the database
+*            
+*/
 
 //file inclusion
 require_once dirname(__FILE__) . '/action.php';
 require_once dirname(__FILE__) . '/movement.php';
 require_once dirname(__FILE__) . '/scenario.php';
 
+ /** \class Movement */
 class User {
 
     //statement of resources
@@ -18,7 +30,11 @@ class User {
     ////
     /**
      * Class constructor
-     *
+     * \param $_name The name of the user
+     * \param $_id The ID of the user
+     * \param $_adult The age of the user
+     * \param $_isadmin The type of the user
+     * \param $_password The password of the user
      */
     //Constructor
     public function __construct($_name, $_id, $_adult, $_isadmin, $_password) {
@@ -54,6 +70,10 @@ class User {
     }
 
     //Getters and setters
+    /** 
+    * 
+    *\return the name of the user
+    */
     public function getName() {
         return $this->name;
     }
@@ -62,6 +82,10 @@ class User {
         $this->name = $name;
     }
 
+    /** 
+    * 
+    *\return the ID of the user
+    */
     public function getId() {
         return $this->id;
     }
@@ -70,6 +94,10 @@ class User {
         $this->id = $id;
     }
 
+    /** 
+    * 
+    *\return the age of the user
+    */
     public function getAdult() {
         return $this->adult;
     }
@@ -78,6 +106,10 @@ class User {
         $this->adult = $adult;
     }
 
+    /** 
+    * 
+    *\return the type of the user
+    */
     public function getIsadmin() {
         return $this->isadmin;
     }
@@ -86,6 +118,10 @@ class User {
         $this->isadmin = $isadmin;
     }
 
+    /** 
+    * 
+    *\return the password of the user
+    */
     public function getPassword() {
         return $this->password;
     }
@@ -94,6 +130,10 @@ class User {
         $this->password = $password;
     }
 
+    /** 
+    * 
+    *\return the scenarios of the user
+    */
     public function getScenarios() {
         return $this->scenarios;
     }
@@ -102,6 +142,10 @@ class User {
         $this->scenarios = $scenarios;
     }
     
+    /** 
+    * 
+    *\return the movements of the user
+    */
     public function getMovements() {
         return $this->movements;
     }

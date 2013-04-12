@@ -1,4 +1,15 @@
 <?php
+/**
+* \file      users.php
+* \author    Connect Home
+* \version   1.0
+* \date      12/04/2013
+* \brief     Model of the Users class
+*
+* \details   This Model is the representation of the users in the system 
+*            
+*            
+*/
 
 //file inclusion
 require_once dirname(__FILE__) . '/action.php';
@@ -7,9 +18,14 @@ require_once dirname(__FILE__) . '/user.php';
 require_once dirname(__FILE__) . '/scenario.php';
 require_once dirname(__FILE__) . '/controller.php';
 
+ /** \class Users */
 class Users {
 
 //We declare the function
+    /** 
+    * 
+    *\param $var The variable from the form to secure
+    */
     public static function secure($var) {
 
         //Clean the variable
@@ -19,6 +35,10 @@ class Users {
         return $foo;
     }
 
+    /** 
+    * 
+    *\return the list of users
+    */
     public static function Getuser() {
         ////
         //statement of resources
@@ -42,6 +62,10 @@ class Users {
         return $users;
     }
 
+    /** 
+    * 
+    *\return the list of movements
+    */
     public static function getMovement() {
 
         //SQL connection
@@ -60,6 +84,10 @@ class Users {
         return $movements;
     }
 
+    /** 
+    * 
+    *\return the list of controllers
+    */
     public static function getController() {
 
         //SQL connection
@@ -81,6 +109,10 @@ class Users {
             return null;
     }
 
+    /** 
+    * 
+    *\return the list of actions
+    */
     public static function getAction() {
 
         //statement of resources
@@ -102,6 +134,10 @@ class Users {
         return $actions;
     }
 
+    /** 
+    * 
+    *\param $id The ID of the user
+    */
     public static function deleteMember($id = -1) {     //Delete a member
         $result = Users::secure($id);     //Get the id
         //SQL connection
@@ -112,6 +148,10 @@ class Users {
         $req = mysql_query($sql) or die('Erreur SQL !<br>' . $sql . '<br>' . mysql_error());
     }
 
+    /** 
+    * 
+    *\param $id The ID of the scenario
+    */
     public static function deleteScenario($id = -1) {   //Delete a scenario
         $result = Users::secure($id);     //Get the id
         //SQL connection
